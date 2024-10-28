@@ -25,6 +25,7 @@ def home():
 def new_customer():
     return render_template('customer.html')
 
+
 @app.route('/addrec', methods=['POST', 'GET'])
 def addrec():
     if request.method == 'POST':
