@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Management</title>
+    <script src="https://unpkg.com/htmx.org@2.0.3"></script>
+    <style>
+        #container {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        #add-customer, #customer-list {
+            width: 50%;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Customer Management</h1>
+
+    <div>
+        <button hx-get="/enternew" hx-target="#add-customer" hx-swap="innerHTML">Add New Customer</button>
+        <button hx-get="/list" hx-target="#customer-list" hx-swap="innerHTML">Customer List</button>
+    </div>
+
+    <div id="container">
+        <!-- Add Customer form will be loaded here -->
+        <div id="add-customer">
+            <p>The "Add New Customer" form will be displayed here.</p>
+        </div>
+
+        <!-- Customer List will be loaded here -->
+        <div id="customer-list">
+            <p>The customer list will be displayed here.</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!-- list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer List</title>
+</head>
+<body>
+    <h2>Customer List</h2>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>Pin</th>
+        </tr>
+        {% for row in rows %}
+        <tr>
+            <td>{{ row.id }}</td>
+            <td>{{ row.name }}</td>
+            <td>{{ row.addr }}</td>
+            <td>{{ row.city }}</td>
+            <td>{{ row.pin }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
