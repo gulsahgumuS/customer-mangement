@@ -12,7 +12,8 @@ def create_table():
             name TEXT NOT NULL,
             addr TEXT,
             city TEXT,
-            pin TEXT
+            pin TEXT,
+            phone TEXT        
         )
         """)
         con.commit()
@@ -34,10 +35,11 @@ def addrec():
             addr = request.form['add']
             city = request.form['city']
             pin = request.form['pin']
-            
+            phone = request.form['phone'] 
+
             with sql.connect("database.db") as con:
                 cur = con.cursor()
-                cur.execute("INSERT INTO customers (name, addr, city, pin) VALUES (?, ?, ?, ?)", (nm, addr, city, pin))
+                cur.execute("INSERT INTO customers (name, addr, city, pin, phone) VALUES (?, ?, ?, ?, ?)", (nm, addr, city, pin, phone))
                 con.commit()
                 
             # Ekleme işlemi tamamlandıktan sonra müşteri listesini döndür
