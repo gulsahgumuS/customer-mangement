@@ -1,7 +1,17 @@
 from flask import Flask, render_template, request
-import sqlite3 as sql
+from flask_sqlalchemy import SQLAlchemy
+from models import db, Customer  # models.py dosyasını içe aktar
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db.init_app(app)
+
+@app.before_first_request
+def create_tables():
+    db.create_all()  # Tabloları oluştur
+
 
 @app.route('/')
 def home():
@@ -11,7 +21,6 @@ def home():
 def new_customer():
     return render_template('customer.html')
 
-
 @app.route('/addrec', methods=['POST', 'GET'])
 def addrec():
     if request.method == 'POST':
@@ -20,35 +29,22 @@ def addrec():
             addr = request.form['add']
             city = request.form['city']
             pin = request.form['pin']
-            phone = request.form['phone'] 
+            phone = request.form['phone']
 
-            with sql.connect("database.db") as con:
-                cur = con.cursor()
-                cur.execute("INSERT INTO customers (name, addr, city, pin, phone) VALUES (?, ?, ?, ?, ?)", (nm, addr, city, pin, phone))
-                con.commit()
-                
-            # Ekleme işlemi tamamlandıktan sonra müşteri listesini döndür
-            con.row_factory = sql.Row
-            cur = con.cursor()
-            cur.execute("SELECT * FROM customers")
-            rows = cur.fetchall()
-            return render_template("list.html", rows=rows)
-            
+            new_customer = Customer(name=nm, addr=addr, city=city, pin=pin, phone=phone)
+            db.session.add(new_customer)
+            db.session.commit()
+            msg = "Record successfully added"
         except Exception as e:
-            con.rollback()
+            db.session.rollback()
             msg = f"Error in insert operation: {e}"
-            return render_template("result.html", msg=msg)
         finally:
-            con.close()
+            return render_template("result.html", msg=msg)
 
 @app.route('/list')
 def list_customers():
-    with sql.connect("database.db") as con:
-        con.row_factory = sql.Row
-        cur = con.cursor()
-        cur.execute("SELECT * FROM customers")
-        rows = cur.fetchall()
-    return render_template("list.html", rows=rows)
+    customers = Customer.query.all()  # Tüm müşterileri al
+    return render_template("list.html", rows=customers)
 
 if __name__ == '__main__':
     app.run(debug=True)
