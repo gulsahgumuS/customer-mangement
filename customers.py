@@ -3,21 +3,6 @@ import sqlite3 as sql
 
 app = Flask(__name__)
 
-def create_table():
-    with sql.connect("database.db") as con:
-        cur = con.cursor()
-        cur.execute("""
-        CREATE TABLE IF NOT EXISTS customers (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT NOT NULL,
-            addr TEXT,
-            city TEXT,
-            pin TEXT,
-            phone TEXT        
-        )
-        """)
-        con.commit()
-
 @app.route('/')
 def home():
     return render_template('home.html')
