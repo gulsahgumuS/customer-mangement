@@ -51,5 +51,4 @@ def list_customers():
     return render_template("list.html", rows=rows)
 
 if __name__ == '__main__':
-    create_table()
     app.run(debug=True)
