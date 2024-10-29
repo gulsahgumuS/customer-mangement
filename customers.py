@@ -51,13 +51,33 @@ def delete_customer(id):
     try:
         db.session.delete(customer_to_delete)
         db.session.commit()
-        
-        # Tüm tabloyu yenileyen güncel listeyi döndürür
         customers = Customer.query.all()
-        return render_template("list.html", rows=customers)
+        return render_template("table_rows.html", rows=customers)  # Sadece tablo satırlarını döndür
     except Exception as e:
         db.session.rollback()
         return redirect(url_for('list_customer'))
+
+
+# Arama rotası
+@app.route('/search', methods=['GET'])
+def search_customer():
+    search_term = request.args.get('search')  # Kullanıcının arama terimini al
+    customers = Customer.query.filter(Customer.name.like(f"%{search_term}%")).all()
+    return render_template("list.html", rows=customers)
+
+# Güncelleme rotası
+@app.route('/edit/<int:id>', methods=['GET', 'POST'])
+def edit_customer(id):
+    customer = Customer.query.get_or_404(id)
+    if request.method == 'POST':
+        customer.name = request.form['name']
+        customer.addr = request.form['addr']
+        customer.city = request.form['city']
+        customer.pin = request.form['pin']
+        customer.phone = request.form['phone']
+        db.session.commit()
+        return redirect(url_for('list_customer'))
+    return render_template('edit_customer.html', customer=customer)
 
 
 if __name__ == '__main__':
