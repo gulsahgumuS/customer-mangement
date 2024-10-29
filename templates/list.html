@@ -14,6 +14,7 @@
             <th>Address</th>
             <th>City</th>
             <th>Pin</th>
+            <th>delete</th>
         </tr>
         {% for row in rows %}
         <tr>
@@ -22,6 +23,11 @@
             <td>{{ row.addr }}</td>
             <td>{{ row.city }}</td>
             <td>{{ row.pin }}</td>
+            <td>
+                <button hx-get="/delete/{{ row.id }}" hx-target="#customer-list">
+                    Delete
+                </button>
+            </td>
         </tr>
         {% endfor %}
     </table>

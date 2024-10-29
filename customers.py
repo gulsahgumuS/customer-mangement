@@ -45,5 +45,16 @@ def list_customer():
     customer = Customer.query.all()
     return render_template("list.html", rows=customer)
 
+@app.route('/delete/<int:id>', methods=['POST'])
+def delete_customer(id):
+    customer_to_delete = Customer.query.get_or_404(id)
+    try:
+        db.session.delete(customer_to_delete)
+        db.session.commit()
+        return redirect(url_for('list_customer'))
+    except Exception as e:
+        db.session.rollback()
+        return redirect(url_for('list_customer'))
+    
 if __name__ == '__main__':
     app.run(debug=True)
