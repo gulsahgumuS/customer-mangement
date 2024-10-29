@@ -1,0 +1,20 @@
+<!-- table_rows.html -->
+{% for row in rows %}
+<tr>
+    <td>{{ row.id }}</td>
+    <td>{{ row.name }}</td>
+    <td>{{ row.addr }}</td>
+    <td>{{ row.city }}</td>
+    <td>{{ row.pin }}</td>
+    <td>{{ row.phone }}</td>
+    <td>
+        <form action="{{ url_for('delete_customer', id=row.id) }}" method="post" 
+              hx-post="{{ url_for('delete_customer', id=row.id) }}" 
+              hx-target="#customer-list" 
+              hx-swap="innerHTML" 
+              style="display:inline;">
+            <button type="submit">Delete</button>
+        </form>
+    </td>
+</tr>
+{% endfor %}
