@@ -7,10 +7,16 @@
 </head>
 <body>
     <h2>Customer List</h2>
+
+    <!-- Arama Formu -->
+    <form action="{{ url_for('search_customer') }}" method="get">
+        <input type="text" name="search" placeholder="Search by name">
+        <button type="submit">Search</button>
+    </form>
     
-    <!-- Tüm tabloyu güncelleyecek şekilde ayarlarız -->
-    <div id="customer-list">
-        <table border="1">
+    <!-- Müşteri Listesi Tablosu -->
+    <table border="1" id="customer-list">
+        <thead>
             <tr>
                 <th>ID</th>
                 <th>Name</th>
@@ -19,9 +25,12 @@
                 <th>Pin</th>
                 <th>Phone</th>
                 <th>Delete</th>
+                <th>Edit</th>
             </tr>
-            {% include 'table_rows.html' %}
-        </table>
-    </div>
+        </thead>
+        <tbody id="customer-tbody" hx-swap="innerHTML" hx-target="#customer-tbody">
+            {% include "table_rows.html" %}
+        </tbody>
+    </table>
 </body>
 </html>

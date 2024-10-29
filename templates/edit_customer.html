@@ -1,0 +1,30 @@
+<!-- edit_customer.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Customer</title>
+</head>
+<body>
+    <h2>Edit Customer</h2>
+    <form action="{{ url_for('edit_customer', id=customer.id) }}" method="post">
+        <label>Name:</label>
+        <input type="text" name="name" value="{{ customer.name }}" required><br>
+        
+        <label>Address:</label>
+        <input type="text" name="addr" value="{{ customer.addr }}"><br>
+        
+        <label>City:</label>
+        <input type="text" name="city" value="{{ customer.city }}"><br>
+        
+        <label>Pin:</label>
+        <input type="text" name="pin" value="{{ customer.pin }}"><br>
+        
+        <label>Phone:</label>
+        <input type="text" name="phone" value="{{ customer.phone }}"><br>
+        
+        <button type="submit">Update</button>
+    </form>
+    <a href="{{ url_for('list_customer') }}">Back to Customer List</a>
+</body>
+</html>
