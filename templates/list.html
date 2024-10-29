@@ -7,29 +7,21 @@
 </head>
 <body>
     <h2>Customer List</h2>
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Address</th>
-            <th>City</th>
-            <th>Pin</th>
-            <th>delete</th>
-        </tr>
-        {% for row in rows %}
-        <tr>
-            <td>{{ row.id }}</td>
-            <td>{{ row.name }}</td>
-            <td>{{ row.addr }}</td>
-            <td>{{ row.city }}</td>
-            <td>{{ row.pin }}</td>
-            <td>
-                <button hx-get="/delete/{{ row.id }}" hx-target="#customer-list">
-                    Delete
-                </button>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
+    
+    <!-- Tüm tabloyu güncelleyecek şekilde ayarlarız -->
+    <div id="customer-list">
+        <table border="1">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>Pin</th>
+                <th>Phone</th>
+                <th>Delete</th>
+            </tr>
+            {% include 'table_rows.html' %}
+        </table>
+    </div>
 </body>
 </html>
